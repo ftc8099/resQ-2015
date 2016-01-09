@@ -47,19 +47,24 @@ import com.qualcomm.robotcore.util.Range;
 public class Robot8099TeleOp extends OpMode {
 
 	/* extreme values for servo ranges */
-	final static double SERVO_1_MIN = 0.20;
-	final static double SERVO_1_MAX = 0.90;
+	final static double SERVO_MIN = 0.20;
+	final static double SERVO_MAX = 0.90;
 
-	// position of servos 1 and 2
+	// position of servos 1, 2, 3
 	double servo_1_position;
+	double servo_2_position;
+	double servo_3_position;
 
 	// change in servo positions
-	double servo_1_delta = 0.05;
+	double servo_delta = 0.05;
 
+	//change in motor positions
 	double motor_3_delta = 0.1;
 
-	// create two servos
+	// create three servos
 	Servo servo_1;
+	Servo servo_2;
+	Servo servo_3;
 
 	// create two dc motors
 	DcMotor motor_1;
@@ -90,6 +95,8 @@ public class Robot8099TeleOp extends OpMode {
 		motor_2 = hardwareMap.dcMotor.get("motor_2");
 		motor_3 = hardwareMap.dcMotor.get("motor_3");
 		servo_1 = hardwareMap.servo.get("servo_1");
+		servo_2 = hardwareMap.servo.get("servo_2");
+		servo_3 = hardwareMap.servo.get("servo_3");
 
 		// get the sensors
 		//ir_seeker = hardwareMap.irSeekerSensor.get("ir_seeker");
@@ -100,7 +107,9 @@ public class Robot8099TeleOp extends OpMode {
 		motor_1.setDirection(DcMotor.Direction.REVERSE);
 
 		// initialize servo locations
-		servo_1_position = SERVO_1_MIN;
+		servo_1_position = SERVO_MIN;
+		servo_2_position = SERVO_MIN;
+		servo_3_position = SERVO_MIN;
 	}
 
 
@@ -184,13 +193,41 @@ public class Robot8099TeleOp extends OpMode {
 			motor_3.setPower(0);
 		}
 
-		// Servo left and right
+		//Left dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_left) {
-			servo_1_position -= servo_1_delta;
+			servo_1_position += servo_delta;
+			try {
+				Thread.sleep(3000);
+			}
+			catch(InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			servo_1_position -= servo_delta;
 		}
+		//Up dpad, move servo, then move back after 3 sec
+		if(gamepad1.dpad_up) {
+			servo_2_position += servo_delta;
+			try {
+				Thread.sleep(3000);
+			}
+			catch(InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			servo_2_position -= servo_delta;
+		}
+		//Right dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_right) {
-			servo_1_position += servo_1_delta;
+			servo_3_position += servo_delta;
+			try {
+				Thread.sleep(3000);
+			}
+			catch(InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			servo_3_position -= servo_delta;
 		}
+
+
 
 		// use a to ratchet down servo 2, x to ratchet down servo 1, y to ratchet up servo 2 and b to ratchet up servo 1
 		/*if(gamepad1.left_bumper){
@@ -201,7 +238,7 @@ public class Robot8099TeleOp extends OpMode {
 		}*/
 
 		// clip servos to prespectified range
-		servo_1_position = Range.clip(servo_1_position,SERVO_1_MIN,SERVO_1_MAX);
+		servo_1_position = Range.clip(servo_1_position,SERVO_MIN,SERVO_MAX);
 
 		// set servo positions
 		servo_1.setPosition(servo_1_position);
