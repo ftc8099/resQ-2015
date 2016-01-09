@@ -55,6 +55,11 @@ public class Robot8099TeleOp extends OpMode {
 	double servo_2_position;
 	double servo_3_position;
 
+	// Associated timers for servo control
+	TimerHelper servo1Timer = new TimerHelper();
+	TimerHelper servo2Timer = new TimerHelper();
+	TimerHelper servo3Timer = new TimerHelper();
+
 	// change in servo positions
 	double servo_delta = 0.05;
 
@@ -193,38 +198,33 @@ public class Robot8099TeleOp extends OpMode {
 			motor_3.setPower(0);
 		}
 
+
 		//Left dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_left) {
-			servo_1_position += servo_delta;
-			try {
-				Thread.sleep(3000);
-			}
-			catch(InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			servo_1_position -= servo_delta;
+			servo1Timer.setWaitPeriod(3000);
+			servo_1_position = SERVO_MAX;
 		}
+		if (servo1Timer.isDone()) {
+			servo_1_position = SERVO_MIN;
+		}
+
 		//Up dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_up) {
-			servo_2_position += servo_delta;
-			try {
-				Thread.sleep(3000);
-			}
-			catch(InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			servo_2_position -= servo_delta;
+			servo2Timer.setWaitPeriod(3000);
+			servo_2_position = SERVO_MAX;
 		}
+		if (servo2Timer.isDone()) {
+			servo_2_position = SERVO_MIN;
+		}
+
 		//Right dpad, move servo, then move back after 3 sec
+
 		if(gamepad1.dpad_right) {
-			servo_3_position += servo_delta;
-			try {
-				Thread.sleep(3000);
-			}
-			catch(InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			servo_3_position -= servo_delta;
+			servo3Timer.setWaitPeriod(3000);
+			servo_3_position = SERVO_MAX;
+		}
+		if (servo3Timer.isDone()) {
+			servo_3_position = SERVO_MIN;
 		}
 
 
