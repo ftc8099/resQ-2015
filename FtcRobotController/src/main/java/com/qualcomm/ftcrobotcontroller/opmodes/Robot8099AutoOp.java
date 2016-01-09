@@ -67,7 +67,7 @@ public class Robot8099AutoOp extends OpMode {
     long waitToPivotMillis = 5 /* seconds */ * 1000;
     long startPivotTime;
 
-    long pivotDuration = 1 /* second */ * 1000;
+    long pivotDuration = /* second */ 1000;
     long endPivotTime;
 
     long startRampTime;
@@ -178,9 +178,9 @@ public class Robot8099AutoOp extends OpMode {
         }
         */
         //telemetry.addData("time", new Long(System.currentTimeMillis()).toString());
-        telemetry.addData("elapse_time", new Long(System.currentTimeMillis() - startTime).toString());
+        telemetry.addData("elapse_time", Long.toString(System.currentTimeMillis() - startTime));
 
-        if (System.currentTimeMillis() > startTime + (5 * 10000 / 3)) {
+        if (System.currentTimeMillis() > startTime + (12 * 1000)) {
             motor_1.setPower(0);
             motor_2.setPower(0);
             telemetry.addData("motor_power", 0);
