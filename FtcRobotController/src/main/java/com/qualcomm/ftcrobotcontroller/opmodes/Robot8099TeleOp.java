@@ -202,29 +202,30 @@ public class Robot8099TeleOp extends OpMode {
 		//Left dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_left) {
 			servo1Timer.setWaitPeriod(3000);
-			servo_1_position = SERVO_MAX;
+			//servo_1_position = SERVO_MAX;
+			servo_1.setPosition(SERVO_MAX);
 		}
 		if (servo1Timer.isDone()) {
-			servo_1_position = SERVO_MIN;
+			servo_1.setPosition(SERVO_MIN);
 		}
 
 		//Up dpad, move servo, then move back after 3 sec
 		if(gamepad1.dpad_up) {
 			servo2Timer.setWaitPeriod(3000);
-			servo_2_position = SERVO_MAX;
+			servo_2.setPosition(SERVO_MAX);
 		}
 		if (servo2Timer.isDone()) {
-			servo_2_position = SERVO_MIN;
+			servo_2.setPosition(SERVO_MIN);
 		}
 
 		//Right dpad, move servo, then move back after 3 sec
 
 		if(gamepad1.dpad_right) {
 			servo3Timer.setWaitPeriod(3000);
-			servo_3_position = SERVO_MAX;
+			servo_3.setPosition(SERVO_MAX);
 		}
 		if (servo3Timer.isDone()) {
-			servo_3_position = SERVO_MIN;
+			servo_3.setPosition(SERVO_MIN);
 		}
 
 
